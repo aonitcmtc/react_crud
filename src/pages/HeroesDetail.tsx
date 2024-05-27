@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useLocation, useRoute } from "wouter";
 import { useHeroes } from "../hooks/useHeroes";
 import { useTitle } from "../hooks/useTitle";
@@ -8,7 +7,7 @@ export const HeroesDetail = () => {
     const heroesName = decodeURI(params!.heroesName)
     const { getHeroesByName } = useHeroes()
     const { img, link, biography } = getHeroesByName(heroesName)
-    const [location, setLocation] = useLocation()
+    const [, setLocation] = useLocation()
     useTitle(`Heroes | ${heroesName}`)
 
     return (

@@ -1,5 +1,5 @@
 import { useTitle } from "../hooks/useTitle";
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useRoute } from 'wouter';
 
@@ -8,8 +8,8 @@ export const AddForm = () => {
     useTitle(`AddForm 📖`)
 
     const baseURL = "http://localhost:3000/users"
-    const [location, setLocation] = useLocation()
-    const [match, params] = useRoute("/editform/:id");
+    const [, setLocation] = useLocation()
+    const [, params] = useRoute("/editform/:id");
 
     const [formData, setFormData] = useState({
         firstname: "",
@@ -21,15 +21,17 @@ export const AddForm = () => {
         status: 1
     });
 
-    const handleChange = (e) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
+          ...prevData,
+          [name]: value,
         }));
     };
 
-    const updateData = async (e) => {
+    const updateData = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             if (params?.id) { 
