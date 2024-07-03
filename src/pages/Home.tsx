@@ -16,7 +16,8 @@ interface User {
 export const Home: React.FC = () => {
     useTitle(`Home 🏠`)
     const [, setLocation] = useLocation()
-    const baseURL = "http://localhost:3000/users"
+    // const baseURL = "http://localhost:3000/users"
+    const baseURL = "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-xzuanwk/endpoint/data/v1/action/find"
     const [users, setUsers] = useState<User[]>([]);
 
     const showAlert = (id: string, name: string) => {
@@ -47,11 +48,36 @@ export const Home: React.FC = () => {
         }
     };
 
+    const headers = {
+        'Content-Type': 'application/json',
+        'api-key': 'JF4iOfixGGsqVw6ocfm4ehw69PZ5FWSojPZopwa0sEyNZn0VYWanl2uijMTyuwYq',
+        'Access-Control-Request-Headers': '*',
+        'Accept':'application/ejson'
+    }
+
+    const query = {
+        "dataSource": "ExpressFirst",
+        "database": "test",
+        "collection": "users",
+        "filter": {
+          "status": 1
+        },
+        "sort": { "completedAt": 1 },
+        "limit": 10
+    }
+
     const getDataList = () => {
-        axios.get(baseURL).then((res) => {
+        axios.post(baseURL, query,{
+            headers: headers
+        }).then((res) => {
             setUsers(res.data)
             console.log(res.data)
         })
+
+        // axios.get(baseURL).then((res) => {
+        //     setUsers(res.data)
+        //     console.log(res.data)
+        // })
     };
 
     useEffect(() => {
